@@ -1,10 +1,11 @@
+
 import { useEffect, useRef } from "react";
 import LoadingOutline from "./LoadingOutline";
 
 
-const Section = ({ color, heading, events, children, isLoading, productUrl, wristband }) => {
+const Section = ({ color, heading, events, children, isLoading, wristband, data}) => {
 
-    const vipEvents = useRef([11164, 11172]);
+    // const vipEvents = useRef([11164, 11172]);
     const sectionEl = useRef(null);
 
     useEffect(() => {
@@ -13,7 +14,7 @@ const Section = ({ color, heading, events, children, isLoading, productUrl, wris
         if (term === wristband){
             sectionEl.current.scrollIntoView({behavior: "smooth", inline: "nearest"})
         }
-    }, [])
+    }, [wristband])
 
     function createTime(utcTime) {
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -24,8 +25,11 @@ const Section = ({ color, heading, events, children, isLoading, productUrl, wris
         return `${day} ${month} ${year}`
     }
 
-    function createLabelCard(evt, isVip){
+    function createLabelCard(evt){
 
+        const vipEvents = data && data.vip_ids.length > 0 && data.vip_ids.split(',');
+        const isVip = vipEvents && vipEvents.find(vipId => +evt.Id === +(vipId.trim()));
+        console.log({vipEvents, isVip})
         return (
             
             <label-card
@@ -34,12 +38,13 @@ const Section = ({ color, heading, events, children, isLoading, productUrl, wris
                 style={{margin: "0.5em", boxShadow: "0.5px 3px 5px 0 rgba(0,0,0,.15)", position: 'relative'}}
                 text={createTime(evt.StartDate)}
                 image={evt.ImageUrl}
-           
+                data-vip={isVip ? 'true' : 'false'}
             ></label-card>
-            // { isVip && <span className="absolute bottom-4 left-4 bg-rose-500 text-white w-fit pl-4 pr-4">VIP</span> }
-    
+
         );
     }
+
+    console.log(data)
 
     return (
     <section ref={sectionEl} style={{background: color}} className="flex min-h-screen flex-col justify-center content-center p-8">
@@ -47,13 +52,15 @@ const Section = ({ color, heading, events, children, isLoading, productUrl, wris
             <div className=' bg-white p-8 mb-8' style={{boxShadow: "0.5px 3px 5px 0 rgba(0,0,0,.15)"}}>
                 <div>
                     <h2 className="text-6xl p-1 mb-8" style={{padding: 0, color: '#605ba3', fontWeight: 800}}>{heading}</h2>
-                    <p className="font-normal  text-gray-700 dark:text-gray-400 m-4" style={{fontSize: 'initial'}}>{children}</p>
-                    { productUrl ? <kclsu-button link={productUrl} purple center>Buy Your Wristband </kclsu-button> : <p className="bg-rose-500 text-white w-fit pl-4 pr-4 m-auto"> Soon to be released!</p>}
+                    <p className="text-left md:text-center font-normal  text-gray-700 dark:text-gray-400 m-4" style={{fontSize: 'initial'}}>{children}</p>
+                    { data && data.product_url ? <kclsu-button link={data.product_url} newtab purple center>Buy Your Wristband </kclsu-button> 
+                    :  data && data.sold_out === 'true' ? <p className="bg-rose-500 text-white w-fit pl-4 pr-4 m-auto"> This wristband is sold out!</p>
+                    : <p className="bg-rose-500 text-white w-fit pl-4 pr-4 m-auto"> Soon to be released!</p>}
                 </div>
             </div>
 
             <div className="grid gap-0.5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 m-auto">
-                {events && events.map(evt => createLabelCard(evt, vipEvents.current.find(vipId => +evt.Id === vipId)))}
+                {events && events.map(evt => createLabelCard(evt))}
             </div>
             {isLoading &&( 
                     <div className="flex w-3/5 m-auto mt-8 justify-center flex-col content-center">

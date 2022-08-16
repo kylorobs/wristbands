@@ -12,3 +12,24 @@
   background-color: #e8e8e8;
   padding: 3em;
 }
+
+label-card[data-vip=true] {
+  position: relative;
+}
+
+label-card[data-vip=true]::after {
+  position: absolute;
+  bottom: -0.5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  right: 0;
+  width: auto;
+  font-weight: bold;
+  height: auto;
+  content: 'VIP Wristband Only';
+  background: #f33f5f;
+  font-size: 0.8em;
+  color: white;
+  height: auto;
+  z-index: 100
+}

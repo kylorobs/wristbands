@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react"
 
-// const guysEventIds = [9548,11144,11145,11174,11173,11164, 11166,11172];
-// const strandEventIds = [11214,11214, 11215, 11216, 11220, 11225, 11179, 11181, 11217, 11222];
-// const freshersEventIds = [];
 
 const UseData = () => {
 
