@@ -1,10 +1,19 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import LoadingOutline from "./LoadingOutline";
 
 
-const Section = ({ color, heading, events, children, isLoading, productUrl }) => {
+const Section = ({ color, heading, events, children, isLoading, productUrl, wristband }) => {
 
     const vipEvents = useRef([11164, 11172]);
+    const sectionEl = useRef(null);
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search)
+        const term = queryParams.get("wristband");
+        if (term === wristband){
+            sectionEl.current.scrollIntoView({behavior: "smooth", inline: "nearest"})
+        }
+    }, [])
 
     function createTime(utcTime) {
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -30,7 +39,7 @@ const Section = ({ color, heading, events, children, isLoading, productUrl }) =>
     }
 
     return (
-    <section style={{background: color}} className="flex min-h-screen flex-col justify-center content-center p-8">
+    <section ref={sectionEl} style={{background: color}} className="flex min-h-screen flex-col justify-center content-center p-8">
         <div className=' xl:w-5/6 2xl:w-4/6 m-auto'>
             <div className=' bg-white p-8 mb-8' style={{boxShadow: "0.5px 3px 5px 0 rgba(0,0,0,.15)"}}>
                 <div>

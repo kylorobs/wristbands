@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <Landing />
-      <Section productUrl="/" isLoading={isLoading} color="rgb(96, 91, 163)" heading="Guy's Campus Wristband" events={guysEvents}>
+      <Section wristband="guys" productUrl="/" isLoading={isLoading} color="rgb(96, 91, 163)" heading="Guy's Campus Wristband" events={guysEvents}>
         Guy's Campus sits next door to London Bridge and Guy's Hospital - nestled in the heart of London. The Guy's Campus Wristband will get you into 8+ events and save you over £60 on tickets. Make sure you don't miss out on the iconic Welcome events such as the Moving in Ice Breaker or the Milkshake Party.
       </Section>
       <Section isLoading={isLoading} color="rgb(245, 160, 0)" heading="Strand Campus Guy's Campus Wristband" events={strandEvents}>
