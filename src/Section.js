@@ -2,7 +2,7 @@ import { useRef } from "react";
 import LoadingOutline from "./LoadingOutline";
 
 
-const Section = ({ color, heading, events, children, isLoading }) => {
+const Section = ({ color, heading, events, children, isLoading, productUrl }) => {
 
     const vipEvents = useRef([11164, 11172]);
 
@@ -32,13 +32,13 @@ const Section = ({ color, heading, events, children, isLoading }) => {
     return (
     <section style={{background: color}} className="flex min-h-screen flex-col justify-center content-center p-8">
         <div className=' xl:w-5/6 2xl:w-4/6 m-auto'>
-        <div className=' bg-white p-8 mb-8'>
-            <div>
-                <h2 className="text-6xl p-1" style={{padding: 0, margin: 0, color: '#605ba3'}}>{heading}</h2>
-                <p className="font-normal text-gray-700 dark:text-gray-400 m-4">
-                           {children}</p>
+            <div className=' bg-white p-8 mb-8' style={{boxShadow: "0.5px 3px 5px 0 rgba(0,0,0,.15)"}}>
+                <div>
+                    <h2 className="text-6xl p-1 mb-8" style={{padding: 0, color: '#605ba3', fontWeight: 800}}>{heading}</h2>
+                    <p className="font-normal text-gray-700 dark:text-gray-400 m-4">{children}</p>
+                    { productUrl ? <kclsu-button link={productUrl} purple center>Buy Your Wristband </kclsu-button> : <p className="bg-rose-500 text-white w-fit pl-4 pr-4 m-auto"> Soon to be released!</p>}
+                </div>
             </div>
-        </div>
 
             <div className="grid gap-0.5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 m-auto">
                 {events && events.map(evt => createLabelCard(evt, vipEvents.current.find(vipId => +evt.Id === vipId)))}
@@ -61,7 +61,7 @@ const Section = ({ color, heading, events, children, isLoading }) => {
                         <LoadingOutline />
                         <LoadingOutline />
                         </div>
-                        {<h3 className="text-white text-5xl m-8">Coming Soon!!</h3>}
+                        {<h3 className="text-white text-5xl m-8">Details coming soon!</h3>}
                     </div>
             )}
         </div>
