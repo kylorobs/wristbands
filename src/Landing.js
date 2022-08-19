@@ -2,19 +2,20 @@ import { useEffect } from "react";
 
 const { Card } = require("flowbite-react")
 
-const Landing = ( { scrollToSection, freshers, guys, strand }) => {
+const Landing = ( { freshers, guys, strand }) => {
 
     useEffect(() => {
         document.addEventListener('emitClick', (e) => {
-            scrollToSection(e.detail)
+            const el = document.getElementById(e.detail);
+            el.scrollIntoView({behavior: "smooth", inline: "start"})
         })
     }, [])
 
-   return ( <section className="min-h-screen bg-rose-400 flex flex-col justify-center content-center p-8 xs:pt-16 md:pt-12">
+   return ( <section className="min-h-screen bg-rose-400 flex flex-col justify-center content-center p-8 pt-16 xs:pt-16 md:pt-12">
     <div className='m-auto xl:w-9/12 max-w-8xl 2xl:w-7/12'>
         <div className=' bg-white p-8 mb-8'>
             <div>
-                <h1 className="text-6xl p-1 mb-8" style={{padding: 0, margin:0, color: '#605ba3', fontWeight: 800}}>Welcome Wristbands</h1>
+                <h1 className="text-6xl p-1 mb-12 md:mb-8" style={{padding: 0, color: '#605ba3', fontWeight: 800}}>Welcome Wristbands</h1>
                 <p className="font-normal text-gray-700 dark:text-gray-400 m-4">From campus specific wristbands, to wristbands which get you exclusive entry into some of London's greatest nightclubs, there's something for you in this year's <a href="/welcome">KCLSU Welcome</a></p>
             </div>
         </div>

@@ -3,18 +3,18 @@ import { useEffect, useRef } from "react";
 import LoadingOutline from "./LoadingOutline";
 
 
-const Section = ({ color, heading, events, children, isLoading, wristband, data}) => {
+const Section = ({target, color, heading, events, children, isLoading, wristband, data}) => {
 
     // const vipEvents = useRef([11164, 11172]);
     const sectionEl = useRef(null);
 
     useEffect(() => {
-        const queryParams = new URLSearchParams(window.location.search)
-        const term = queryParams.get("wristband");
-        if (term === wristband){
-            sectionEl.current.scrollIntoView({behavior: "smooth", inline: "nearest"})
+        // const queryParams = new URLSearchParams(window.location.search)
+        // const term = queryParams.get("wristband");
+        if (target === wristband){
+            sectionEl.current.scrollIntoView({behavior: "smooth", inline: "start"})
         }
-    }, [wristband])
+    }, [wristband, target])
 
     function createTime(utcTime) {
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -26,13 +26,11 @@ const Section = ({ color, heading, events, children, isLoading, wristband, data}
     }
 
     function createLabelCard(evt){
-
         const vipEvents = data && data.vip_ids.length > 0 && data.vip_ids.split(',');
         const isVip = vipEvents && vipEvents.find(vipId => +evt.Id === +(vipId.trim()));
-        console.log({vipEvents, isVip})
         return (
-            
             <label-card
+                key={evt.Title}
                 link={evt.Url}
                 cardtitle={evt.Title}
                 style={{margin: "0.5em", boxShadow: "0.5px 3px 5px 0 rgba(0,0,0,.15)", position: 'relative'}}
@@ -40,14 +38,12 @@ const Section = ({ color, heading, events, children, isLoading, wristband, data}
                 image={evt.ImageUrl}
                 data-vip={isVip ? 'true' : 'false'}
             ></label-card>
-
         );
     }
 
-    console.log(data)
 
     return (
-    <section ref={sectionEl} style={{background: color}} className="flex min-h-screen flex-col justify-center content-center p-8">
+    <section id={wristband} ref={sectionEl} style={{background: color}} className="flex min-h-screen flex-col justify-center content-center p-8">
         <div className='xl:w-5/6 2xl:w-4/6 m-auto'>
             <div className=' bg-white p-8 mb-8' style={{boxShadow: "0.5px 3px 5px 0 rgba(0,0,0,.15)"}}>
                 <div>
